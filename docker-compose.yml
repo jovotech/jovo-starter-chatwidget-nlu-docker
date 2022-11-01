@@ -1,0 +1,49 @@
+version: "3.5"
+services:
+  jovo-app:
+    depends_on:
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    command: 'npm run start:dev'
+    networks:
+      - appnetwork
+    env_file:
+      - .env.example
+    environment:
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/"
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env.example
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - appnetwork
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - .env.example
+    environment:
+      MONGO_USERNAME: ${MONGO_USERNAME}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/"
+    networks:
+      - appnetwork
+networks:
+  appnetwork:
+    driver: bridge

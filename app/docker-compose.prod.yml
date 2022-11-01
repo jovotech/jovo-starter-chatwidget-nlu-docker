@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+  jovo-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+    command: 'npm run start:prod'

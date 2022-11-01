@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+  jovo-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    command: 'npm run start:dev'

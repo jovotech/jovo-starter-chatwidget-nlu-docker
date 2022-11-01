@@ -1,0 +1,42 @@
+version: "3.5"
+services:
+  jovo-app:
+    depends_on:
+      - jovo-snips-nlu
+    build:
+      context: ./app
+      dockerfile: app/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/src:/app/src
+      - ./app/models/:/app/models/
+    command: 'npm run start:dev'
+    environment:
+      SNIPS_NLU_URL: http://jovo-snips-nlu:5000
+    networks:
+      - appnetwork
+  jovo-snips-nlu:
+    build:
+      context: ./snips-nlu-server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - appnetwork
+  jovo-chat-widget:
+    depends_on:
+      - jovo-app
+    build:
+      context: ./chatwidget
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./chatwidget:/app
+    command: 'npm run serve'
+    networks:
+      - appnetwork
+networks:
+  appnetwork:
+    driver: bridge

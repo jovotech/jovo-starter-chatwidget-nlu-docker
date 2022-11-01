@@ -1,0 +1,20 @@
+{
+  "invocation": "my test app",
+  "version": "4.0",
+  "intents": {
+    "YesIntent": {
+      "phrases": [
+        "yes",
+        "yes please",
+        "sure"
+      ]
+    },
+    "NoIntent": {
+      "phrases": [
+        "no",
+        "no thanks",
+        "hell"
+      ]
+    }
+  }
+}

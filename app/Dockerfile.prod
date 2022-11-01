@@ -1,0 +1,8 @@
+FROM node:18-alpine AS jovo-app-builder
+WORKDIR /app
+
+COPY . .
+RUN npm install && npm run bundle:prod && npm prune --production
+
+EXPOSE 3000
+

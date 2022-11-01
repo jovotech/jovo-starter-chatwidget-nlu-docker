@@ -1,0 +1,64 @@
+version: "3.5"
+services:
+  jovo-app:
+    depends_on:
+      - mongo
+    build:
+      context: ./app
+      dockerfile: app/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app/src:/app/src
+    command: 'npm run start:dev'
+    networks:
+      - appnetwork
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+  jovo-chat-widget:
+    depends_on:
+      - jovo-app
+    build:
+      context: ./chatwidget
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./chatwidget:/app
+    command: 'npm run serve'
+    networks:
+      - appnetwork
+  jovo-snips-nlu:
+    build:
+      context: ./snips-nlu-server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - appnetwork
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - appnetwork
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    networks:
+      - appnetwork
+networks:
+  appnetwork:
+    driver: bridge

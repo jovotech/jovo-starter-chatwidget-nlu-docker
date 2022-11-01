@@ -1,0 +1,12 @@
+version: "3.5"
+services:
+  jovo-app:
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - appnetwork
+networks:
+  appnetwork:
+    driver: bridge

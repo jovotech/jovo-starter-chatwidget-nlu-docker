@@ -1,0 +1,3 @@
+[submodule "snips-nlu-server"]
+	path = snips-nlu-server
+	url = https://github.com/jovotech/snips-nlu-server
