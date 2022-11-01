@@ -5,7 +5,7 @@ services:
       - jovo-snips-nlu
     build:
       context: ./app
-      dockerfile: app/Dockerfile.dev
+      dockerfile: ./Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
