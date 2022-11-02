@@ -134,3 +134,6 @@ dist
 .idea
 
 .engine
+
+# Mac stuff
+.DS_Store
