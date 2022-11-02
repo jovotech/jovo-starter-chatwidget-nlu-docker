@@ -1,12 +1,11 @@
-import { AlexaPlatform } from '@jovotech/platform-alexa';
-import { CorePlatform } from '@jovotech/platform-core';
 import { App } from '@jovotech/framework';
+import { WebPlatform } from '@jovotech/platform-web';
+import { SnipsNlu } from '@jovotech/nlu-snips';
+import { TrainSnipsNluPlugin } from './TrainSnipsNluPlugin';
 
 import { GlobalComponent } from './components/GlobalComponent';
-import { LoveHatePizzaComponent } from './components/LoveHatePizzaComponent';
-import { SnipsNlu } from '@jovotech/nlu-snips';
-import { WebPlatform } from '@jovotech/platform-web';
-import { TrainSnipsNluPlugin } from './TrainSnipsNluPlugin';
+import { TableReservationComponent } from './components/TableReservationComponent/TableReservationComponent';
+
 /*
 |--------------------------------------------------------------------------
 | APP CONFIGURATION
@@ -26,7 +25,7 @@ const app = new App({
   | Learn more here: www.jovo.tech/docs/components
   |
   */
-  components: [GlobalComponent, LoveHatePizzaComponent],
+  components: [GlobalComponent, TableReservationComponent],
 
   /*
   |--------------------------------------------------------------------------
@@ -38,8 +37,6 @@ const app = new App({
   |
   */
   plugins: [
-    // Add Jovo plugins here
-    new CorePlatform(),
     new WebPlatform({
       plugins: [
         new TrainSnipsNluPlugin(),
