@@ -21,7 +21,7 @@ services:
       context: ./snips-nlu-server
       dockerfile: Dockerfile
     ports:
-      - "5000:5001"
+      - "5001:5001"
     networks:
       - appnetwork
   jovo-chat-widget:
