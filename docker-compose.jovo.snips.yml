@@ -32,8 +32,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    volumes:
-      - ./chatwidget:/app
     command: 'npm run serve'
     networks:
       - appnetwork
