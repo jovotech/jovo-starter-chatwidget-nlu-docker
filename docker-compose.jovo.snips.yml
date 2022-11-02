@@ -13,7 +13,7 @@ services:
       - ./app/models/:/app/models/
     command: 'npm run start:dev'
     environment:
-      SNIPS_NLU_URL: http://jovo-snips-nlu:5000
+      SNIPS_NLU_URL: http://jovo-snips-nlu:5001
     networks:
       - appnetwork
   jovo-snips-nlu:
@@ -21,7 +21,7 @@ services:
       context: ./snips-nlu-server
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "5000:5001"
     networks:
       - appnetwork
   jovo-chat-widget:
