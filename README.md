@@ -17,5 +17,5 @@ $ cd jovo-docker-example
 $ git submodule update --init --recursive
 
 # Start Docker container
-$ docker-compose -f docker-compose.jovo.snips.yml up
+$ docker-compose -f docker-compose.yml up
 ```

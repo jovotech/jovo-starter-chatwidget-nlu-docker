@@ -2,46 +2,37 @@ version: "3.5"
 services:
   jovo-app:
     depends_on:
-      - mongo
+      - jovo-snips-nlu
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./app
+      dockerfile: ./Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
-      - ./src:/app/src
+      - ./app/src:/app/src
+      - ./app/models/:/app/models/
     command: 'npm run start:dev'
+    environment:
+      SNIPS_NLU_URL: http://jovo-snips-nlu:5001
     networks:
       - appnetwork
-    env_file:
-      - .env.example
-    environment:
-      MONGO_USERNAME: ${MONGO_USERNAME}
-      MONGO_PASSWORD: ${MONGO_PASSWORD}
-      MONGO_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/"
-  mongo:
-    image: mongo
-    restart: always
+  jovo-snips-nlu:
+    build:
+      context: ./snips-nlu-server
+      dockerfile: Dockerfile
     ports:
-      - "27017:27017"
-    env_file:
-      - .env.example
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      - "5001:5001"
     networks:
       - appnetwork
-  mongo-express:
-    image: mongo-express
-    restart: always
+  jovo-chat-widget:
+    depends_on:
+      - jovo-app
+    build:
+      context: ./chatwidget
+      dockerfile: Dockerfile
     ports:
-      - 8081:8081
-    env_file:
-      - .env.example
-    environment:
-      MONGO_USERNAME: ${MONGO_USERNAME}
-      MONGO_PASSWORD: ${MONGO_PASSWORD}
-      MONGO_URL: "mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/"
+      - "8080:8080"
+    command: 'npm run serve'
     networks:
       - appnetwork
 networks:
