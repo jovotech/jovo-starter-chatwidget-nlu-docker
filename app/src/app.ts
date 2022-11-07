@@ -25,7 +25,7 @@ const app = new App({
   | Learn more here: www.jovo.tech/docs/components
   |
   */
-  components: [GlobalComponent, TableReservationComponent],
+  components: [TableReservationComponent, GlobalComponent],
 
   /*
   |--------------------------------------------------------------------------
