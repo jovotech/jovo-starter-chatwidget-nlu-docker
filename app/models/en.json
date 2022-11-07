@@ -35,10 +35,10 @@
       "phrases": ["what can I do", "help"]
     },
     "YesIntent": {
-      "phrases": ["yes", "yes please", "sure"]
+      "phrases": ["yes", "yes please", "sure", "yeah"]
     },
     "NoIntent": {
-      "phrases": ["no", "no thanks"]
+      "phrases": ["no", "no thanks", "nope"]
     }
   },
   "entityTypes": {
