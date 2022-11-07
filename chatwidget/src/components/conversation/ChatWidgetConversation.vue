@@ -50,10 +50,12 @@ export default class ChatWidgetConversation extends Vue {
   }
 
   private async onRequest(req: ClientRequest) {
-    // Do not show the LAUNCH bubble
+    // LAUNCH request should not be shown as a chat bubble
     if (req.input?.type === 'LAUNCH') {
       return;
     }
+
+    // Display the user input as a chat bubble
     this.conversationParts.push({
       type: 'request',
       data: req.input || {},

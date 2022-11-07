@@ -47,7 +47,7 @@ export default class ChatWidgetConversationPart extends Vue {
           }
         : { type: InputType.Text, text: quickReply.value || quickReply.text };
 
-    return this.$client.send(input);
+    return this.$client.send(input); // @see https://www.jovo.tech/marketplace/client-web#send-a-request-to-jovo
   }
 }
 </script>
