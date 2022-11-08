@@ -30,9 +30,15 @@ services:
     build:
       context: ./chatwidget
       dockerfile: Dockerfile
+    volumes:
+      - ./chatwidget/src:/app/src
+    stdin_open: true
+    tty: true
     ports:
       - "8080:8080"
     command: 'npm run serve'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
     networks:
       - appnetwork
 networks:
