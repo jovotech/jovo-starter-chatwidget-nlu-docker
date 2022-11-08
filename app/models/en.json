@@ -1,0 +1,49 @@
+{
+  "invocation": "my test app",
+  "version": "4.0",
+  "intents": {
+    "HelloIntent": {
+      "phrases": ["hi", "hello", "hey"]
+    },
+    "ReserveTableIntent": {
+      "phrases": [
+        "reserve a table",
+        "book a table",
+        "table reservation",
+        "I want to reserve a table",
+        "I want to book a table",
+        "reserve a table {seatingType}"
+      ],
+      "entities": {
+        "seatingType": {
+          "type": "SeatingType"
+        }
+      }
+    },
+    "SeatingTypeIntent": {
+      "phrases": ["{seatingType} table", "{seatingType} seating", "{seatingType}"],
+      "entities": {
+        "seatingType": {
+          "type": "SeatingType"
+        }
+      }
+    },
+    "OrderIntent": {
+      "phrases": ["order", "order something"]
+    },
+    "HelpIntent": {
+      "phrases": ["what can I do", "help"]
+    },
+    "YesIntent": {
+      "phrases": ["yes", "yes please", "sure"]
+    },
+    "NoIntent": {
+      "phrases": ["no", "no thanks"]
+    }
+  },
+  "entityTypes": {
+    "SeatingType": {
+      "values": ["inside", "outside"]
+    }
+  }
+}
