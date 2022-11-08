@@ -1,9 +1,19 @@
-import { Component, BaseComponent, Intents, Handle, Jovo } from '@jovotech/framework';
+import { Component, BaseComponent, Intents, Handle, Jovo, ComponentData } from '@jovotech/framework';
 import { GlobalComponent } from '../GlobalComponent';
 import { CollectTableDataComponent } from './CollectTableDataComponent';
 
+// The data that needs to be collected (slot filling) to make a reservation
+export interface TableReservationData {
+  numberOfPeople?: number; // e.g. "a table for 3"
+  seatingType?: 'inside' | 'outside'; // e.g. "a table outside"
+}
+
+export interface TableReservationComponentData extends ComponentData {
+  slots: TableReservationData;
+}
+
 @Component({ components: [CollectTableDataComponent] })
-export class TableReservationComponent extends BaseComponent {
+export class TableReservationComponent extends BaseComponent<TableReservationComponentData> {
   /*
     START can either be reached via $redirect from another component
     or via a global ReserveTableIntent.
@@ -15,7 +25,12 @@ export class TableReservationComponent extends BaseComponent {
   }
 
   collectData() {
+    // We delegate to a subcomponent that takes care of collecting all the data
+    // After successful collection, it resolves to 'success', which executes the askForFinalConfirmation handler
     return this.$delegate(CollectTableDataComponent, {
+      config: {
+        slots: this.$component.data.slots,
+      },
       resolve: {
         success: this.askForFinalConfirmation, // The handler that gets called if 'success' is resolved
         dismiss: this.redirectToOptions, // The handler that gets called if 'dismiss' is resolved
@@ -33,12 +48,20 @@ export class TableReservationComponent extends BaseComponent {
     if: (jovo: Jovo) =>
       jovo.$entities.seatingType?.resolved === 'inside' ||
       jovo.$entities.seatingType?.resolved === 'outside',
+      // TODO: numberOfPeople
   })
-  askForFinalConfirmation(seatingType?: string) {
-    this.$component.data.seatingType = seatingType || this.$entities.seatingType?.resolved;
+  askForFinalConfirmation(slots?: TableReservationData) {
+    if (slots) {
+      this.$component.data.slots = slots;
+    }
+    // TODO: Extract from entities
+    // this.$component.data.slots = slots || {
+    //   numberOfPeople: parseInt(this.$entities.numberOfPeople?.resolved), // string?
+    //   seatingType: this.$entities.seatingType?.resolved,
+    // };
 
     return this.$send({
-      message: `Alright! Just to confirm: Should I reserve table ${this.$component.data.seatingType} for you?`,
+      message: `Just to confirm: Should I reserve a table ${this.$component.data.slots.seatingType} for ${this.$component.data.slots.numberOfPeople} people for you?`,
       quickReplies: ['yes', 'no'],
     });
   }
@@ -49,7 +72,7 @@ export class TableReservationComponent extends BaseComponent {
   @Intents(['YesIntent'])
   confirmReservation() {
     return this.$send({
-      message: `Great! We're going to reserve a table for ${this.$component.data.seatingType} seating.`,
+      message: `Great! We're going to reserve an ${this.$component.data.slots.seatingType} table for ${this.$component.data.slots.numberOfPeople} people.`,
       listen: false, // close session
     });
   }

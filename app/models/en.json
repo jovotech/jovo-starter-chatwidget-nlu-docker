@@ -8,11 +8,37 @@
     "ReserveTableIntent": {
       "phrases": [
         "reserve a table",
+        "reserve a table for {numberOfPeople}",
+        "reserve a table for {numberOfPeople} people",
         "book a table",
+        "book a table for {numberOfPeople}",
+        "book a table for {numberOfPeople} people",
         "table reservation",
+        "table reservation for {numberOfPeople}",
+        "{seatingType} table reservation for {numberOfPeople}",
         "I want to reserve a table",
         "I want to book a table",
-        "reserve a table {seatingType}"
+        "reserve a table {seatingType}",
+        "a table {seatingType} for {numberOfPeople} people",
+        "{numberOfPeople} people {seatingType}"
+      ],
+      "entities": {
+        "seatingType": {
+          "type": "SeatingType"
+        },
+        "numberOfPeople": {
+          "type": {
+            "snips": "snips/number"
+          }
+        }
+      }
+    },
+    "SeatingTypeIntent": {
+      "phrases": [
+        "{seatingType} table",
+        "{seatingType} seating",
+        "{seatingType}",
+        "a table {seatingType}"
       ],
       "entities": {
         "seatingType": {
@@ -20,11 +46,18 @@
         }
       }
     },
-    "SeatingTypeIntent": {
-      "phrases": ["{seatingType} table", "{seatingType} seating", "{seatingType}"],
+    "NumberOfPeopleIntent": {
+      "phrases": [
+        "{numberOfPeople} people",
+        "{numberOfPeople}",
+        "for {numberOfPeople}",
+        "for {numberOfPeople} people"
+      ],
       "entities": {
-        "seatingType": {
-          "type": "SeatingType"
+        "numberOfPeople": {
+          "type": {
+            "snips": "snips/number"
+          }
         }
       }
     },
