@@ -1,4 +1,4 @@
-import { Component, BaseComponent, Intents, ComponentData, ComponentConfig, Handle, Jovo } from '@jovotech/framework';
+import { Component, BaseComponent, ComponentData, ComponentConfig, Handle, Jovo } from '@jovotech/framework';
 import { TableReservationData } from './TableReservationComponent';
 
 export interface TableReservationComponentData extends ComponentData {
@@ -74,7 +74,6 @@ export class CollectTableDataComponent extends BaseComponent<TableReservationCom
     // @see https://www.jovo.tech/docs/handle-decorators#if
     if: (jovo: Jovo) => !!jovo.$entities 
   })
-  @Intents(['ReserveTableIntent', 'NumberOfPeopleIntent', 'SeatingTypeIntent'])
   fillSlots() {
     if (this.$entities.numberOfPeople) {
       this.$component.data.slots.numberOfPeople = parseInt(`${this.$entities.numberOfPeople.resolved}`);
