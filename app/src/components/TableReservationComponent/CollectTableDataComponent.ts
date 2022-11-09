@@ -92,9 +92,9 @@ export class CollectTableDataComponent extends BaseComponent<
   /*
     This handler can be accessed using multiple intents.
     This way, we can potentially fill multiple slots at once.
-    @see https://www.jovo.tech/docs/handlers#start
   */
   @Handle({
+    // @see https://www.jovo.tech/docs/handle-decorators#intents
     intents: [
       'ReserveTableIntent', // e.g. "a table outside for 3 people"
       'NumberOfPeopleIntent', // e.g. "3 people"
