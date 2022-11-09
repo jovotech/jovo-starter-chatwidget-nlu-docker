@@ -1,4 +1,11 @@
-import { Component, BaseComponent, ComponentData, ComponentConfig, Handle, Jovo } from '@jovotech/framework';
+import {
+  Component,
+  BaseComponent,
+  ComponentData,
+  ComponentConfig,
+  Handle,
+  Jovo,
+} from '@jovotech/framework';
 import { TableReservationData } from './TableReservationComponent';
 
 export interface CollectTableDataComponentData extends ComponentData {
@@ -15,17 +22,29 @@ export interface CollectTableDataComponentConfig extends ComponentConfig {
   slots: TableReservationData;
 }
 
+/*
+|--------------------------------------------------------------------------
+| CollectTableDataComponent
+|--------------------------------------------------------------------------
+|
+| This component is a subcomponent of TableReservationComponent.
+| It is responsible for collecting all the data needed for the reservation.
+|
+*/
 @Component({})
-export class CollectTableDataComponent extends BaseComponent<CollectTableDataComponentData, CollectTableDataComponentConfig> {
+export class CollectTableDataComponent extends BaseComponent<
+  CollectTableDataComponentData,
+  CollectTableDataComponentConfig
+> {
   /*
     START is executed when the parent component delegates to this component
     @see https://www.jovo.tech/docs/handlers#start
-  */ 
+  */
   START() {
     this.$component.data.unhandledCounter = 0;
     this.$component.data.slots = this.$component.config?.slots || {};
 
-    return this.askForDataOrResolve();    
+    return this.askForDataOrResolve();
   }
 
   /*
@@ -34,10 +53,10 @@ export class CollectTableDataComponent extends BaseComponent<CollectTableDataCom
   */
   askForDataOrResolve() {
     if (!this.$component.data.slots.numberOfPeople) {
-      return this.askForNumberOfPeople()
+      return this.askForNumberOfPeople();
     }
     if (!this.$component.data.slots.seatingType) {
-      return this.askForSeatingType()
+      return this.askForSeatingType();
     }
 
     // If all slots are filled, send the data to the parent component
@@ -63,7 +82,7 @@ export class CollectTableDataComponent extends BaseComponent<CollectTableDataCom
     This handler can be accessed using multiple intents.
     This way, we can potentially fill multiple slots at once.
     @see https://www.jovo.tech/docs/handlers#start
-  */   
+  */
   @Handle({
     intents: [
       'ReserveTableIntent', // e.g. "a table outside for 3 people"
@@ -76,7 +95,9 @@ export class CollectTableDataComponent extends BaseComponent<CollectTableDataCom
   })
   fillSlots() {
     if (this.$entities.numberOfPeople) {
-      this.$component.data.slots.numberOfPeople = parseInt(`${this.$entities.numberOfPeople.resolved}`);
+      this.$component.data.slots.numberOfPeople = parseInt(
+        `${this.$entities.numberOfPeople.resolved}`,
+      );
     }
     if (this.$entities.seatingType) {
       this.$component.data.slots.seatingType = this.$entities.seatingType.resolved as TableReservationData['seatingType'];
@@ -84,7 +105,7 @@ export class CollectTableDataComponent extends BaseComponent<CollectTableDataCom
 
     this.$send({ message: ['Great!', 'Alright!'] }); // An array of messages results in randomized output
     this.$component.data.unhandledCounter = 0; // Reset counter in case another slot needs to be filled
-    
+
     return this.askForDataOrResolve();
   }
 

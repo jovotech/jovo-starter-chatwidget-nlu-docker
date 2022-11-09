@@ -12,6 +12,15 @@ export interface TableReservationComponentData extends ComponentData {
   slots: TableReservationData;
 }
 
+/*
+|--------------------------------------------------------------------------
+| TableReservationComponent
+|--------------------------------------------------------------------------
+|
+| This component is the entry point to the table reservation flow.
+| For data collection, it delegates to a subcomponent called CollectTableDataComponent
+|
+*/
 @Component({ components: [CollectTableDataComponent] })
 export class TableReservationComponent extends BaseComponent<TableReservationComponentData> {
   /*
