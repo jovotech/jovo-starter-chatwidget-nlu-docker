@@ -1,7 +1,7 @@
 import { Component, BaseComponent, ComponentData, ComponentConfig, Handle, Jovo } from '@jovotech/framework';
 import { TableReservationData } from './TableReservationComponent';
 
-export interface TableReservationComponentData extends ComponentData {
+export interface CollectTableDataComponentData extends ComponentData {
   // The slots to be filled.
   // This is stored in $component.data until resolved and sent to the parent component
   slots: TableReservationData;
@@ -10,13 +10,13 @@ export interface TableReservationComponentData extends ComponentData {
   unhandledCounter: number;
 }
 
-export interface TableReservationComponentDataConfig extends ComponentConfig {
+export interface CollectTableDataComponentConfig extends ComponentConfig {
   // If some slots have already been filled by the parent component, they are passed using component config
   slots: TableReservationData;
 }
 
 @Component({})
-export class CollectTableDataComponent extends BaseComponent<TableReservationComponentData, TableReservationComponentDataConfig> {
+export class CollectTableDataComponent extends BaseComponent<CollectTableDataComponentData, CollectTableDataComponentConfig> {
   /*
     START is executed when the parent component delegates to this component
     @see https://www.jovo.tech/docs/handlers#start
@@ -48,7 +48,7 @@ export class CollectTableDataComponent extends BaseComponent<TableReservationCom
   askForNumberOfPeople() {
     return this.$send({
       message: 'For how many people?',
-      quickReplies: ['2', '3', '4'],
+      quickReplies: ['2', '3', '4'], // Offer a few examples
     });
   }
 
