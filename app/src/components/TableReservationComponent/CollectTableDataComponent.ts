@@ -17,6 +17,10 @@ export interface TableReservationComponentDataConfig extends ComponentConfig {
 
 @Component({})
 export class CollectTableDataComponent extends BaseComponent<TableReservationComponentData, TableReservationComponentDataConfig> {
+  /*
+    START is executed when the parent component delegates to this component
+    @see https://www.jovo.tech/docs/handlers#start
+  */ 
   START() {
     this.$component.data.unhandledCounter = 0;
     this.$component.data.slots = this.$component.config?.slots || {};
@@ -24,6 +28,10 @@ export class CollectTableDataComponent extends BaseComponent<TableReservationCom
     return this.askForDataOrResolve();    
   }
 
+  /*
+    This method is used to manage the slot filling.
+    When all data is collected, it resolves and sends the data back to the parent component
+  */
   askForDataOrResolve() {
     if (!this.$component.data.slots.numberOfPeople) {
       return this.askForNumberOfPeople()
@@ -33,6 +41,7 @@ export class CollectTableDataComponent extends BaseComponent<TableReservationCom
     }
 
     // If all slots are filled, send the data to the parent component
+    // @see https://www.jovo.tech/docs/handlers#resolve-a-component
     return this.$resolve('success', this.$component.data.slots);
   }
 
@@ -50,19 +59,23 @@ export class CollectTableDataComponent extends BaseComponent<TableReservationCom
     });
   }
 
+  /*
+    This handler can be accessed using multiple intents.
+    This way, we can potentially fill multiple slots at once.
+    @see https://www.jovo.tech/docs/handlers#start
+  */   
   @Handle({
-    // We can access this handler using multiple intents to allow for variations
     intents: [
       'ReserveTableIntent', // e.g. "a table outside for 3 people"
       'NumberOfPeopleIntent', // e.g. "3 people"
       'SeatingTypeIntent' // e.g. "outside"
     ],
     // Only go into this handler if the request contains an entity.
-    // Otherwise, it goes into UNHANDLED
+    // @see https://www.jovo.tech/docs/handle-decorators#if
     if: (jovo: Jovo) => !!jovo.$entities 
   })
   @Intents(['ReserveTableIntent', 'NumberOfPeopleIntent', 'SeatingTypeIntent'])
-  collectData() {
+  fillSlots() {
     if (this.$entities.numberOfPeople) {
       this.$component.data.slots.numberOfPeople = parseInt(`${this.$entities.numberOfPeople.resolved}`);
     }
@@ -76,10 +89,14 @@ export class CollectTableDataComponent extends BaseComponent<TableReservationCom
     return this.askForDataOrResolve();
   }
 
-  @Intents(['HelpIntent'])
+  /*
+    UNHANDLED gets executed if the user input doesn't match one of the handlers in this component
+    @see https://www.jovo.tech/docs/handlers#unhandled
+  */
   UNHANDLED() {
     this.$component.data.unhandledCounter++;
 
+    // Don't go into UNHANDLED twice, so that users don't get stuck in a loop
     if (this.$component.data.unhandledCounter > 1) {
       return this.$resolve('dismiss');
     }

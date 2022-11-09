@@ -15,8 +15,9 @@ export interface TableReservationComponentData extends ComponentData {
 @Component({ components: [CollectTableDataComponent] })
 export class TableReservationComponent extends BaseComponent<TableReservationComponentData> {
   /*
-    START can either be reached via $redirect from another component
+    START can either be reached via $redirect/$delegate from another component
     or via a global ReserveTableIntent.
+    @see https://www.jovo.tech/docs/handlers#start
   */
   @Intents([{ name: 'ReserveTableIntent', global: true }])
   async START() {
@@ -27,6 +28,7 @@ export class TableReservationComponent extends BaseComponent<TableReservationCom
   collectData() {
     // We delegate to a subcomponent that takes care of collecting all the data
     // After successful collection, it resolves to 'success', which executes the askForFinalConfirmation handler
+    // @see https://www.jovo.tech/docs/handlers#delegate-to-components
     return this.$delegate(CollectTableDataComponent, {
       config: {
         slots: this.$component.data.slots,
