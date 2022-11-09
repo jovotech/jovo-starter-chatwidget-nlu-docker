@@ -20,7 +20,7 @@ export class GlobalComponent extends BaseComponent {
   }
 
   /*
-    This handler can be reached either via a global HelpIntent or via redirects.
+    This handler can be reached either via a global HelpIntent or via direct calls, e.g. from LAUNCH above.
   */
   @Intents(['HelpIntent'])
   suggestOptions() {
@@ -36,9 +36,15 @@ export class GlobalComponent extends BaseComponent {
   @Intents(['OrderIntent'])
   async redirectToReservation() {
     await this.$send(`We don't support this feature yet, but I can help you book a table!`);
+
+    // @see https://www.jovo.tech/docs/handlers#redirect-to-components
     return this.$redirect(TableReservationComponent, 'collectData');
   }
 
+  /*
+    The global UNHANDLED gets called whenever there is no match in any component.
+    @see https://www.jovo.tech/docs/handlers#unhandled
+  */
   async UNHANDLED() {
     await this.$send(`Apologies, I couldn't process your last message.`);
     return this.suggestOptions();
