@@ -12,6 +12,7 @@
         "reserve a table for {date}",
         "reserve a table for {numberOfPeople}",
         "reserve a table for {numberOfPeople} people",
+        "reserve a table for {numberOfPeople} people {date}",
         "book a table",
         "do you have a table available {date}",
         "book a table for {numberOfPeople}",
@@ -23,7 +24,9 @@
         "I want to book a table",
         "reserve a table {seatingType}",
         "a table {seatingType} for {numberOfPeople} people",
-        "{numberOfPeople} people {seatingType}"
+        "a table {seatingType} for {numberOfPeople} people {date}",
+        "{numberOfPeople} people {seatingType}",
+        "{numberOfPeople} people {date}"
       ],
       "entities": {
         "seatingType": {
