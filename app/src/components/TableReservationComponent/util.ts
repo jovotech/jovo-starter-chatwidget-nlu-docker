@@ -1,8 +1,11 @@
 import { Jovo } from '@jovotech/framework';
 import { TableReservationData } from './TableReservationComponent';
 
-export function extractSlotsFromEntities(jovo: Jovo): TableReservationData {
-  const slots: TableReservationData = {};
+export function extractSlotsFromEntities(
+  jovo: Jovo,
+  data?: TableReservationData,
+): TableReservationData {
+  const slots = data || {};
   if (jovo.$entities.numberOfPeople) {
     slots.numberOfPeople = extractNumberOfPeople(jovo);
   }

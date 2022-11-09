@@ -106,7 +106,7 @@ export class CollectTableDataComponent extends BaseComponent<
     if: (jovo: Jovo) => !!jovo.$entities,
   })
   fillSlots() {
-    this.$component.data.slots = extractSlotsFromEntities(this);
+    this.$component.data.slots = extractSlotsFromEntities(this, this.$component.data.slots);
 
     this.$send({ message: ['Great!', 'Alright!'] }); // An array of messages results in randomized output
     this.$component.data.unhandledCounter = 0; // Reset counter in case another slot needs to be filled
