@@ -87,11 +87,11 @@ export class CollectTableDataComponent extends BaseComponent<
     intents: [
       'ReserveTableIntent', // e.g. "a table outside for 3 people"
       'NumberOfPeopleIntent', // e.g. "3 people"
-      'SeatingTypeIntent' // e.g. "outside"
+      'SeatingTypeIntent', // e.g. "outside"
     ],
     // Only go into this handler if the request contains an entity.
     // @see https://www.jovo.tech/docs/handle-decorators#if
-    if: (jovo: Jovo) => !!jovo.$entities 
+    if: (jovo: Jovo) => !!jovo.$entities,
   })
   fillSlots() {
     if (this.$entities.numberOfPeople) {
