@@ -1,11 +1,13 @@
-import { Component, BaseComponent, Intents, Handle, Jovo, ComponentData } from '@jovotech/framework';
+import { Component, BaseComponent, Intents, ComponentData } from '@jovotech/framework';
 import { GlobalComponent } from '../GlobalComponent';
 import { CollectTableDataComponent } from './CollectTableDataComponent';
+import { extractSlotsFromEntities } from './util';
 
 // The data that needs to be collected (slot filling) to make a reservation
 export interface TableReservationData {
   numberOfPeople?: number; // e.g. "a table for 3"
   seatingType?: 'inside' | 'outside'; // e.g. "a table outside"
+  date?: Date;
 }
 
 export interface TableReservationComponentData extends ComponentData {
@@ -30,6 +32,9 @@ export class TableReservationComponent extends BaseComponent<TableReservationCom
   */
   @Intents([{ name: 'ReserveTableIntent', global: true }])
   async START() {
+    // If the user entered this handler with e.g. "book a table tomorrow 1pm", the slot can already be used
+    this.$component.data.slots = extractSlotsFromEntities(this);
+
     await this.$send('Sure, I can help you book a table.');
     return this.collectData();
   }
@@ -50,26 +55,12 @@ export class TableReservationComponent extends BaseComponent<TableReservationCom
   }
 
   /*
-    This handler can either be reached via deep invocation ("reserve a table outside")
-    or via successful data collection ('success' resolve)
+    This handler is executed after successful data collection ('success' resolve)
   */
-  @Handle({
-    global: true,
-    intents: ['ReserveTableIntent'],
-    if: (jovo: Jovo) =>
-      jovo.$entities.seatingType?.resolved === 'inside' ||
-      jovo.$entities.seatingType?.resolved === 'outside',
-      // TODO: numberOfPeople
-  })
   askForFinalConfirmation(slots?: TableReservationData) {
     if (slots) {
       this.$component.data.slots = slots;
     }
-    // TODO: Extract from entities
-    // this.$component.data.slots = slots || {
-    //   numberOfPeople: parseInt(this.$entities.numberOfPeople?.resolved), // string?
-    //   seatingType: this.$entities.seatingType?.resolved,
-    // };
 
     return this.$send({
       message: `Just to confirm: Should I reserve a table ${this.$component.data.slots.seatingType} for ${this.$component.data.slots.numberOfPeople} people for you?`,

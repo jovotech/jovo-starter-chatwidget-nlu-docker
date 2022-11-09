@@ -8,9 +8,12 @@
     "ReserveTableIntent": {
       "phrases": [
         "reserve a table",
+        "reserve a table {date}",
+        "reserve a table for {date}",
         "reserve a table for {numberOfPeople}",
         "reserve a table for {numberOfPeople} people",
         "book a table",
+        "do you have a table available {date}",
         "book a table for {numberOfPeople}",
         "book a table for {numberOfPeople} people",
         "table reservation",
@@ -29,6 +32,11 @@
         "numberOfPeople": {
           "type": {
             "snips": "snips/number"
+          }
+        },
+        "date": {
+          "type": {
+            "snips": "snips/datetime"
           }
         }
       }
@@ -57,6 +65,20 @@
         "numberOfPeople": {
           "type": {
             "snips": "snips/number"
+          }
+        }
+      }
+    },
+    "DateIntent": {
+      "phrases": [
+        "{date}",
+        "on {date}",
+        "for {date}"
+      ],
+      "entities": {
+        "date": {
+          "type": {
+            "snips": "snips/datetime"
           }
         }
       }
