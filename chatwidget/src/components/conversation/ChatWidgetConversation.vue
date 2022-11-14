@@ -25,6 +25,7 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class ChatWidgetConversation extends Vue {
   conversationParts: ConversationPart[] = [];
 
+  // TODO: display quick replies here instead and remove from output?
   // takes the conversation parts and removes all quick replies but the last ones
   get conversationPartsWithQuickRepliesOnlyInLast() {
     return this.conversationParts.map((part, index) => {

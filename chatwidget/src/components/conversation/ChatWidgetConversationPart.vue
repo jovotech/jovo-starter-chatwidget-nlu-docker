@@ -16,7 +16,8 @@
 <script lang="ts">
 import { ConversationPart } from '@/types';
 import { Input, InputType, QuickReplyValue } from '@jovotech/client-web-vue2';
-import { MessageDisplay, OutputTemplateDisplay } from '@jovotech/output-components-vue';
+import OutputTemplateDisplay from '@/components/output/OutputTemplateDisplay.vue';
+import MessageDisplay from '@/components/output/MessageDisplay.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
