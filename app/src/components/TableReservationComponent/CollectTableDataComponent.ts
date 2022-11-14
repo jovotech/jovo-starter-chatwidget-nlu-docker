@@ -73,7 +73,7 @@ export class CollectTableDataComponent extends BaseComponent<
       message: 'What day and time?',
       quickReplies: ['tomorrow 1pm', 'next week Tuesday at noon'], // Offer a few examples
       listen: {
-        intents: [ 'ReserveTableIntent', 'DateIntent' ],
+        intents: [ 'ReserveTableIntent', 'DateIntent' ], // @see https://www.jovo.tech/docs/nlu#intent-scoping
       },
     });
   }
@@ -83,7 +83,7 @@ export class CollectTableDataComponent extends BaseComponent<
       message: 'For how many people?',
       quickReplies: ['2', '3', '4'], // Offer a few examples
       listen: {
-        intents: [ 'ReserveTableIntent', 'NumberOfPeopleIntent' ],
+        intents: [ 'ReserveTableIntent', 'NumberOfPeopleIntent' ], // @see https://www.jovo.tech/docs/nlu#intent-scoping
       },
     });
   }
@@ -93,7 +93,7 @@ export class CollectTableDataComponent extends BaseComponent<
       message: 'Do you prefer inside or outside seating?',
       quickReplies: ['inside', 'outside'],
       listen: {
-        intents: [ 'ReserveTableIntent', 'SeatingTypeIntent' ],
+        intents: [ 'ReserveTableIntent', 'SeatingTypeIntent' ], // @see https://www.jovo.tech/docs/nlu#intent-scoping
       },
     });
   }
