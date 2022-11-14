@@ -72,6 +72,9 @@ export class CollectTableDataComponent extends BaseComponent<
     return this.$send({
       message: 'What day and time?',
       quickReplies: ['tomorrow 1pm', 'next week Tuesday at noon'], // Offer a few examples
+      listen: {
+        intents: [ 'ReserveTableIntent', 'DateIntent' ],
+      },
     });
   }
 
@@ -79,6 +82,9 @@ export class CollectTableDataComponent extends BaseComponent<
     return this.$send({
       message: 'For how many people?',
       quickReplies: ['2', '3', '4'], // Offer a few examples
+      listen: {
+        intents: [ 'ReserveTableIntent', 'NumberOfPeopleIntent' ],
+      },
     });
   }
 
@@ -86,6 +92,9 @@ export class CollectTableDataComponent extends BaseComponent<
     return this.$send({
       message: 'Do you prefer inside or outside seating?',
       quickReplies: ['inside', 'outside'],
+      listen: {
+        intents: [ 'ReserveTableIntent', 'SeatingTypeIntent' ],
+      },
     });
   }
 
