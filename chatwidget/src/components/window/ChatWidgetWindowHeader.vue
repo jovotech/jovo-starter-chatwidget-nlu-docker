@@ -1,6 +1,9 @@
 <template>
   <div class="p-6 bg-primary text-white flex items-center justify-between">
-    <h3 class="text-base font-bold">Jovo Sample Bot</h3>
+    <div class="flex items-center space-x-3">
+      <img class="h-10" src="@/assets/logo.svg" />
+      <h3 class="text-base font-bold">Jovo Sample Bot</h3>
+    </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       class="h-5 w-5 cursor-pointer hover:text-gray-100"
