@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'flex-grow flex flex-col space-y-4 px-6 py-4 overflow-y-scroll scrollbar-invisible hover:scrollbar',
+      'flex-grow flex flex-col space-y-2 px-6 py-4 overflow-y-scroll scrollbar-invisible hover:scrollbar',
     ]"
   >
     <chat-widget-conversation-part
@@ -9,6 +9,7 @@
       :key="index"
       :part="part"
     />
+    <chat-widget-conversation-loading-indicator :is-loading="isLoading" />
     <div v-if="quickReplies" class="self-end space-x-2 space-y-2">
         <quick-reply-display
           v-for="(quickReply, index) in quickReplies"
@@ -22,6 +23,7 @@
 
 <script lang="ts">
 import ChatWidgetConversationPart from '@/components/conversation/ChatWidgetConversationPart.vue';
+import ChatWidgetConversationLoadingIndicator from '@/components/conversation/ChatWidgetConversationLoadingIndicator.vue';
 import QuickReplyDisplay from '@/components/output/QuickReplyDisplay.vue';
 import { ConversationPart } from '@/types';
 import { Input, InputType, QuickReplyValue, ClientEvent, ClientRequest, NormalizedOutputTemplate } from '@jovotech/client-web-vue2';
@@ -29,14 +31,15 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'chat-widget-conversation',
-  components: { ChatWidgetConversationPart, QuickReplyDisplay },
+  components: { ChatWidgetConversationPart, ChatWidgetConversationLoadingIndicator, QuickReplyDisplay },
 })
 export default class ChatWidgetConversation extends Vue {
   conversationParts: ConversationPart[] = [];
+  isLoading: boolean = false;
 
   get quickReplies() {
     const lastPart = this.conversationParts[this.conversationParts.length -1];
-    if (lastPart && lastPart.type === 'response') {
+    if (lastPart?.type === 'response') {
       return lastPart.data.quickReplies;
     }
     return undefined;
@@ -84,6 +87,8 @@ export default class ChatWidgetConversation extends Vue {
       type: 'request',
       data: req.input || {},
     });
+
+    this.isLoading = true;
     await this.$nextTick();
     this.scrollToBottom();
   }
@@ -93,6 +98,8 @@ export default class ChatWidgetConversation extends Vue {
       type: 'response',
       data: output,
     });
+
+    this.isLoading = false;
     await this.$nextTick();
     this.scrollToBottom();
   }
