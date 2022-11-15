@@ -1,9 +1,9 @@
 <template>
-  <div class="px-8 py-6 bg-primary text-white flex items-center justify-between">
+  <div class="p-6 bg-primary text-white flex items-center justify-between">
     <h3 class="text-base font-bold">Jovo Sample Bot</h3>
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="h-5 w-5 sm:hidden cursor-pointer hover:text-gray-100"
+      class="h-5 w-5 cursor-pointer hover:text-gray-100"
       viewBox="0 0 20 20"
       fill="currentColor"
       @click="$emit('close')"
