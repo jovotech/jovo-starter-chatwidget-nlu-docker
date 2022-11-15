@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import CardDisplay from '@/components/CardDisplay.vue';
+import CardDisplay from '@/components/output/CardDisplay.vue';
 import { Carousel } from '@jovotech/output';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 

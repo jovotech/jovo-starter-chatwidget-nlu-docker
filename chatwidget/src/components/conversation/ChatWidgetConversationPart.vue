@@ -1,16 +1,15 @@
 <template>
-  <div class="max-w-3/4 inline" :class="isRequest ? 'self-end' : 'self-start'">
-    <message-display
-      v-if="isRequest"
-      class="bg-primary text-white"
-      :message="part.data.text || part.data.type"
-    />
-    <output-template-display
-      v-else
-      :output="part.data"
-      @quick-reply-click="onQuickReplyClick"
-    ></output-template-display>
-  </div>
+    <div class="max-w-3/4 inline" :class="isRequest ? 'self-end' : 'self-start'">
+      <message-display
+        v-if="isRequest"
+        class="bg-primary text-white"
+        :message="part.data.text || part.data.type"
+      />
+      <output-template-display
+        v-else
+        :output="part.data"
+      ></output-template-display>
+    </div>
 </template>
 
 <script lang="ts">

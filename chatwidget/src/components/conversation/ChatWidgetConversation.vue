@@ -5,34 +5,41 @@
     ]"
   >
     <chat-widget-conversation-part
-      v-for="(part, index) in conversationPartsWithQuickRepliesOnlyInLast"
+      v-for="(part, index) in conversationParts"
       :key="index"
       :part="part"
     />
+    <div v-if="quickReplies" class="self-end space-x-2 space-y-2">
+        <quick-reply-display
+          v-for="(quickReply, index) in quickReplies"
+          :key="index"
+          :quick-reply="quickReply"
+          @click="onQuickReplyClick"
+        />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import ChatWidgetConversationPart from '@/components/conversation/ChatWidgetConversationPart.vue';
+import QuickReplyDisplay from '@/components/output/QuickReplyDisplay.vue';
 import { ConversationPart } from '@/types';
-import { ClientEvent, ClientRequest, NormalizedOutputTemplate } from '@jovotech/client-web-vue2';
+import { Input, InputType, QuickReplyValue, ClientEvent, ClientRequest, NormalizedOutputTemplate } from '@jovotech/client-web-vue2';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'chat-widget-conversation',
-  components: { ChatWidgetConversationPart },
+  components: { ChatWidgetConversationPart, QuickReplyDisplay },
 })
 export default class ChatWidgetConversation extends Vue {
   conversationParts: ConversationPart[] = [];
 
-  // TODO: display quick replies here instead and remove from output?
-  // takes the conversation parts and removes all quick replies but the last ones
-  get conversationPartsWithQuickRepliesOnlyInLast() {
-    return this.conversationParts.map((part, index) => {
-      return index !== this.conversationParts.length - 1 && part.type === 'response'
-        ? { ...part, data: { ...part.data, quickReplies: undefined } }
-        : part;
-    });
+  get quickReplies() {
+    const lastPart = this.conversationParts[this.conversationParts.length -1];
+    if (lastPart && lastPart.type === 'response') {
+      return lastPart.data.quickReplies;
+    }
+    return undefined;
   }
 
   mounted() {
@@ -48,6 +55,22 @@ export default class ChatWidgetConversation extends Vue {
   scrollToBottom() {
     if (!(this.$el instanceof HTMLDivElement)) return;
     this.$el.scrollTop = this.$el.scrollHeight;
+  }
+
+  onQuickReplyClick(quickReply: QuickReplyValue) {
+    const input: Input =
+      typeof quickReply === 'string'
+        ? { type: InputType.Text, text: quickReply }
+        : quickReply.intent
+        ? {
+            type: InputType.Intent,
+            text: quickReply.value || quickReply.text,
+            intent: quickReply.intent,
+            entities: quickReply.entities,
+          }
+        : { type: InputType.Text, text: quickReply.value || quickReply.text };
+
+    return this.$client.send(input); // @see https://www.jovo.tech/marketplace/client-web#send-a-request-to-jovo
   }
 
   private async onRequest(req: ClientRequest) {

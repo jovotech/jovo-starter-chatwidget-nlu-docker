@@ -16,14 +16,6 @@
       />
     </template>
     <message-display v-if="output.message" :message="output.message" />
-    <div v-if="output.quickReplies" class="space-x-2">
-      <quick-reply-display
-        v-for="(quickReply, index) in output.quickReplies"
-        :key="index"
-        :quick-reply="quickReply"
-        @click="$emit('quick-reply-click', $event)"
-      />
-    </div>
   </div>
 </template>
 
