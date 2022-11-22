@@ -1,7 +1,7 @@
 import { Component, BaseComponent, Intents, ComponentData } from '@jovotech/framework';
 import { GlobalComponent } from '../GlobalComponent';
 import { CollectTableDataComponent } from './CollectTableDataComponent';
-import { extractSlotsFromEntities } from './util';
+import { extractSlotsFromEntities, formatDate } from './util';
 
 // The data that needs to be collected (slot filling) to make a reservation
 export interface TableReservationData {
@@ -63,7 +63,7 @@ export class TableReservationComponent extends BaseComponent<TableReservationCom
     }
 
     return this.$send({
-      message: `Just to confirm: Should I reserve a table ${this.$component.data.slots.seatingType} for ${this.$component.data.slots.numberOfPeople} people for you?`,
+      message: `Just to confirm: Should I reserve a table ${this.$component.data.slots.seatingType} for ${this.$component.data.slots.numberOfPeople} people on ${formatDate(this.$component.data.slots.date!)} for you?`,
       quickReplies: ['yes', 'no'],
     });
   }
@@ -74,7 +74,7 @@ export class TableReservationComponent extends BaseComponent<TableReservationCom
   @Intents(['YesIntent'])
   confirmReservation() {
     return this.$send({
-      message: `Great! We're going to reserve an ${this.$component.data.slots.seatingType} table for ${this.$component.data.slots.numberOfPeople} people.`,
+      message: `Great! We're looking forward to welcoming you.`,
       listen: false, // close session
     });
   }

@@ -45,3 +45,17 @@ export function extractDate(jovo: Jovo): TableReservationData['date'] {
   const date = new Date(jovo.$entities.date.resolved);
   return date;
 }
+
+export function formatDate(date: Date | string): string {
+  // NOTE: For simplicity, we're keeping this very basic
+  if (typeof date === 'string') {
+    date = new Date(date);
+  }
+
+  const formattedDate = date.toLocaleString(undefined, {
+    month: "short", day: "numeric", 
+    hour: "numeric", minute: "numeric"
+  });
+  
+  return formattedDate;
+}
