@@ -10,7 +10,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: '#434A65',
+        primary: '#272F4B',
       },
       inset: {
         0.5: '0.5rem',

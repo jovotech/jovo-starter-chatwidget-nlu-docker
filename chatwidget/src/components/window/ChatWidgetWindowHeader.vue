@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 bg-primary text-white flex items-center justify-between">
     <div class="flex items-center space-x-3">
-      <img class="h-10" src="@/assets/logo.svg" />
+      <img class="h-10" src="@/assets/jovo-logo.svg" />
       <h3 class="text-base font-bold">Jovo Sample Bot</h3>
     </div>
     <svg

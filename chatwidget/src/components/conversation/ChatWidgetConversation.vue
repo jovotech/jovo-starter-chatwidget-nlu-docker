@@ -35,7 +35,7 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class ChatWidgetConversation extends Vue {
   conversationParts: ConversationPart[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
 
   get quickReplies() {
     const lastPart = this.conversationParts[this.conversationParts.length -1];
