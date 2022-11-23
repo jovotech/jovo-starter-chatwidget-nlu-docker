@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "@jovotech/platform-web": "^4.4.0",
-    "@jovotech/db-filedb": "^4.4.0",
-    "@jovotech/db-mongodb": "^4.4.0",
-    "@jovotech/framework": "^4.4.0",
-    "@jovotech/nlu-snips": "^4.4.0",
-    "@jovotech/plugin-debugger": "^4.4.0",
-    "@jovotech/server-express": "^4.4.0",
+    "@jovotech/platform-web": "^4.5.0",
+    "@jovotech/db-filedb": "^4.5.0",
+    "@jovotech/db-mongodb": "^4.5.0",
+    "@jovotech/framework": "^4.5.0",
+    "@jovotech/nlu-snips": "^4.5.0",
+    "@jovotech/plugin-debugger": "^4.5.0",
+    "@jovotech/server-express": "^4.5.0",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
