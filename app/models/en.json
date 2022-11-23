@@ -8,11 +8,48 @@
     "ReserveTableIntent": {
       "phrases": [
         "reserve a table",
+        "reserve a table {date}",
+        "reserve a table for {date}",
+        "reserve a table for {numberOfPeople}",
+        "reserve a table for {numberOfPeople} people",
+        "reserve a table for {numberOfPeople} people {date}",
         "book a table",
+        "do you have a table available {date}",
+        "book a table for {numberOfPeople}",
+        "book a table for {numberOfPeople} people",
         "table reservation",
+        "table reservation for {numberOfPeople}",
+        "{seatingType} table reservation for {numberOfPeople}",
         "I want to reserve a table",
         "I want to book a table",
-        "reserve a table {seatingType}"
+        "reserve a table {seatingType}",
+        "a table {seatingType} for {numberOfPeople} people",
+        "a table {seatingType} for {numberOfPeople} people {date}",
+        "{numberOfPeople} people {seatingType}",
+        "{numberOfPeople} people {date}"
+      ],
+      "entities": {
+        "seatingType": {
+          "type": "SeatingType"
+        },
+        "numberOfPeople": {
+          "type": {
+            "snips": "snips/number"
+          }
+        },
+        "date": {
+          "type": {
+            "snips": "snips/datetime"
+          }
+        }
+      }
+    },
+    "SeatingTypeIntent": {
+      "phrases": [
+        "{seatingType} table",
+        "{seatingType} seating",
+        "{seatingType}",
+        "a table {seatingType}"
       ],
       "entities": {
         "seatingType": {
@@ -20,11 +57,32 @@
         }
       }
     },
-    "SeatingTypeIntent": {
-      "phrases": ["{seatingType} table", "{seatingType} seating", "{seatingType}"],
+    "NumberOfPeopleIntent": {
+      "phrases": [
+        "{numberOfPeople} people",
+        "{numberOfPeople}",
+        "for {numberOfPeople}",
+        "for {numberOfPeople} people"
+      ],
       "entities": {
-        "seatingType": {
-          "type": "SeatingType"
+        "numberOfPeople": {
+          "type": {
+            "snips": "snips/number"
+          }
+        }
+      }
+    },
+    "DateIntent": {
+      "phrases": [
+        "{date}",
+        "on {date}",
+        "for {date}"
+      ],
+      "entities": {
+        "date": {
+          "type": {
+            "snips": "snips/datetime"
+          }
         }
       }
     },
@@ -35,10 +93,10 @@
       "phrases": ["what can I do", "help"]
     },
     "YesIntent": {
-      "phrases": ["yes", "yes please", "sure"]
+      "phrases": ["yes", "yes please", "sure", "yeah"]
     },
     "NoIntent": {
-      "phrases": ["no", "no thanks"]
+      "phrases": ["no", "no thanks", "nope"]
     }
   },
   "entityTypes": {

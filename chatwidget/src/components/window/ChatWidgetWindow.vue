@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col border border-gray-400 rounded-xl sm:w-96 shadow-xl">
+  <div class="flex flex-col border border-gray-400 rounded-xl sm:w-104 shadow-xl">
     <chat-widget-window-header
       class="flex-shrink-0 rounded-t-xl border-b"
       @close="$emit('close')"

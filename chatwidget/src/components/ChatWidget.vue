@@ -46,7 +46,10 @@ export default class ChatWidget extends Vue {
 
   async handleToggle() {
     if (!this.$client.isInitialized) {
-      await this.$client.initialize();
+      await this.$client.initialize(); // @see https://www.jovo.tech/marketplace/client-web#initialize
+
+      // Send a LAUNCH request to the Jovo app
+      // @see https://www.jovo.tech/marketplace/client-web#send-a-request-to-jovo
       await this.$client.send({ type: InputType.Launch });
     }
     this.isVisible = !this.isVisible;
@@ -58,7 +61,8 @@ export default class ChatWidget extends Vue {
   }
 
   private onOutput(output: NormalizedOutputTemplate) {
-    // custom property just used for this example to redirect to a given website
+    // This is an example how a custom Jovo Output property can be used
+    // For example, if redirectTo is added to the output, the widget redirects to the given URL
     const redirectTo = output.platforms?.web?.redirectTo;
     if (typeof redirectTo === 'string' && redirectTo) {
       setTimeout(() => {

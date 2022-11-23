@@ -10,7 +10,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        primary: '#434A65',
+        primary: '#272F4B',
       },
       inset: {
         0.5: '0.5rem',
@@ -22,6 +22,7 @@ module.exports = {
         80: '20rem',
         88: '22rem',
         96: '24rem',
+        104: '26rem',
       },
       maxWidth: {
         '1/4': '25%',

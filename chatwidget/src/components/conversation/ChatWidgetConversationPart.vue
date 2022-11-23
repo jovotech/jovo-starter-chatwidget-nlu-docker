@@ -1,22 +1,22 @@
 <template>
-  <div class="max-w-3/4 inline" :class="isRequest ? 'self-end' : 'self-start'">
-    <message-display
-      v-if="isRequest"
-      class="bg-primary text-white"
-      :message="part.data.text || part.data.type"
-    />
-    <output-template-display
-      v-else
-      :output="part.data"
-      @quick-reply-click="onQuickReplyClick"
-    ></output-template-display>
-  </div>
+    <div class="max-w-3/4 inline" :class="isRequest ? 'self-end' : 'self-start'">
+      <message-display
+        v-if="isRequest"
+        class="bg-primary text-white my-2"
+        :message="part.data.text || part.data.type"
+      />
+      <output-template-display
+        v-else
+        :output="part.data"
+      ></output-template-display>
+    </div>
 </template>
 
 <script lang="ts">
 import { ConversationPart } from '@/types';
 import { Input, InputType, QuickReplyValue } from '@jovotech/client-web-vue2';
-import { MessageDisplay, OutputTemplateDisplay } from '@jovotech/output-components-vue';
+import OutputTemplateDisplay from '@/components/output/OutputTemplateDisplay.vue';
+import MessageDisplay from '@/components/output/MessageDisplay.vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
@@ -47,7 +47,7 @@ export default class ChatWidgetConversationPart extends Vue {
           }
         : { type: InputType.Text, text: quickReply.value || quickReply.text };
 
-    return this.$client.send(input);
+    return this.$client.send(input); // @see https://www.jovo.tech/marketplace/client-web#send-a-request-to-jovo
   }
 }
 </script>

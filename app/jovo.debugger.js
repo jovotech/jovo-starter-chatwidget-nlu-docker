@@ -10,15 +10,9 @@ const debuggerConfig = new DebuggerConfig({
       },
     },
     {
-      label: 'Yes',
+      label: 'reserve a table',
       input: {
-        intent: 'YesIntent',
-      },
-    },
-    {
-      label: 'No',
-      input: {
-        intent: 'NoIntent',
+        intent: 'ReserveTableIntent',
       },
     },
     // ...

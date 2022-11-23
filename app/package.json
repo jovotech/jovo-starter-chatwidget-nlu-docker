@@ -1,8 +1,8 @@
 {
-  "name": "jovo-v4-template",
+  "name": "jovo-starter-chatwidget-nlu-docker",
   "private": true,
   "version": "4.0.0",
-  "description": "Get started with Jovo Framework v4 using this sample TypeScript app.",
+  "description": "Run a chatbot built with Jovo, Vue.js, and Snips NLU with a single command using Docker.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -20,15 +20,13 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "@jovotech/platform-web": "^4.0.0",
-    "@jovotech/db-filedb": "^4.0.0",
-    "@jovotech/db-mongodb": "^4.3.4",
-    "@jovotech/framework": "^4.0.0",
-    "@jovotech/nlu-snips": "^4.3.4",
-    "@jovotech/platform-alexa": "^4.3.4",
-    "@jovotech/platform-core": "^4.3.4",
-    "@jovotech/plugin-debugger": "^4.0.0",
-    "@jovotech/server-express": "^4.0.0",
+    "@jovotech/platform-web": "^4.5.0",
+    "@jovotech/db-filedb": "^4.5.0",
+    "@jovotech/db-mongodb": "^4.5.0",
+    "@jovotech/framework": "^4.5.0",
+    "@jovotech/nlu-snips": "^4.5.0",
+    "@jovotech/plugin-debugger": "^4.5.0",
+    "@jovotech/server-express": "^4.5.0",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
@@ -59,12 +57,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jovotech/jovo-sample-voice-app-nodejs.git"
+    "url": "git+https://github.com/jovotech/jovo-starter-chatwidget-nlu-docker.git"
   },
   "author": "jovotech",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/jovotech/jovo-v4-template/issues"
+    "url": "https://github.com/jovotech/jovo-starter-chatwidget-nlu-docker/issues"
   },
-  "homepage": "https://github.com/jovotech/jovo-v4-template#readme"
+  "homepage": "https://github.com/jovotech/jovo-starter-chatwidget-nlu-docker#readme"
 }

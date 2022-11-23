@@ -1,21 +1,52 @@
-import { Component, BaseComponent, Intents, Handle, Jovo } from '@jovotech/framework';
+import { Component, BaseComponent, Intents, ComponentData } from '@jovotech/framework';
 import { GlobalComponent } from '../GlobalComponent';
 import { CollectTableDataComponent } from './CollectTableDataComponent';
+import { extractSlotsFromEntities, formatDate } from './util';
 
+// The data that needs to be collected (slot filling) to make a reservation
+export interface TableReservationData {
+  numberOfPeople?: number; // e.g. "a table for 3"
+  seatingType?: 'inside' | 'outside'; // e.g. "a table outside"
+  date?: Date;
+}
+
+export interface TableReservationComponentData extends ComponentData {
+  slots: TableReservationData;
+}
+
+/*
+|--------------------------------------------------------------------------
+| TableReservationComponent
+|--------------------------------------------------------------------------
+|
+| This component is the entry point to the table reservation flow.
+| For data collection, it delegates to a subcomponent called CollectTableDataComponent
+|
+*/
 @Component({ components: [CollectTableDataComponent] })
-export class TableReservationComponent extends BaseComponent {
+export class TableReservationComponent extends BaseComponent<TableReservationComponentData> {
   /*
-    START can either be reached via $redirect from another component
+    START can either be reached via $redirect/$delegate from another component
     or via a global ReserveTableIntent.
+    @see https://www.jovo.tech/docs/handlers#start
   */
   @Intents([{ name: 'ReserveTableIntent', global: true }])
   async START() {
+    // If the user entered this handler with e.g. "book a table tomorrow 1pm", the slot can already be used
+    this.$component.data.slots = extractSlotsFromEntities(this);
+
     await this.$send('Sure, I can help you book a table.');
     return this.collectData();
   }
 
   collectData() {
+    // We delegate to a subcomponent that takes care of collecting all the data
+    // After successful collection, it resolves to 'success', which executes the askForFinalConfirmation handler
+    // @see https://www.jovo.tech/docs/handlers#delegate-to-components
     return this.$delegate(CollectTableDataComponent, {
+      config: {
+        slots: this.$component.data.slots,
+      },
       resolve: {
         success: this.askForFinalConfirmation, // The handler that gets called if 'success' is resolved
         dismiss: this.redirectToOptions, // The handler that gets called if 'dismiss' is resolved
@@ -24,21 +55,15 @@ export class TableReservationComponent extends BaseComponent {
   }
 
   /*
-    This handler can either be reached via deep invocation ("reserve a table outside")
-    or via successful data collection ('success' resolve)
+    This handler is executed after successful data collection ('success' resolve)
   */
-  @Handle({
-    global: true,
-    intents: ['ReserveTableIntent'],
-    if: (jovo: Jovo) =>
-      jovo.$entities.seatingType?.resolved === 'inside' ||
-      jovo.$entities.seatingType?.resolved === 'outside',
-  })
-  askForFinalConfirmation(seatingType?: string) {
-    this.$component.data.seatingType = seatingType || this.$entities.seatingType?.resolved;
+  askForFinalConfirmation(slots?: TableReservationData) {
+    if (slots) {
+      this.$component.data.slots = slots;
+    }
 
     return this.$send({
-      message: `Alright! Just to confirm: Should I reserve table ${this.$component.data.seatingType} for you?`,
+      message: `Just to confirm: Should I reserve a table ${this.$component.data.slots.seatingType} for ${this.$component.data.slots.numberOfPeople} people on ${formatDate(this.$component.data.slots.date!)} for you?`,
       quickReplies: ['yes', 'no'],
     });
   }
@@ -49,7 +74,7 @@ export class TableReservationComponent extends BaseComponent {
   @Intents(['YesIntent'])
   confirmReservation() {
     return this.$send({
-      message: `Great! We're going to reserve a table for ${this.$component.data.seatingType} seating.`,
+      message: `Great! We're looking forward to welcoming you.`,
       listen: false, // close session
     });
   }

@@ -1,37 +1,48 @@
 <template>
   <div
     :class="[
-      'flex-grow flex flex-col space-y-4 px-6 py-4 overflow-y-scroll scrollbar-invisible hover:scrollbar',
+      'flex-grow flex flex-col space-y-2 px-6 py-4 overflow-y-scroll scrollbar-invisible hover:scrollbar',
     ]"
   >
     <chat-widget-conversation-part
-      v-for="(part, index) in conversationPartsWithQuickRepliesOnlyInLast"
+      v-for="(part, index) in conversationParts"
       :key="index"
       :part="part"
     />
+    <chat-widget-conversation-loading-indicator :is-loading="isLoading" />
+    <div v-if="quickReplies" class="self-end space-x-2 space-y-2">
+        <quick-reply-display
+          v-for="(quickReply, index) in quickReplies"
+          :key="index"
+          :quick-reply="quickReply"
+          @click="onQuickReplyClick"
+        />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import ChatWidgetConversationPart from '@/components/conversation/ChatWidgetConversationPart.vue';
+import ChatWidgetConversationLoadingIndicator from '@/components/conversation/ChatWidgetConversationLoadingIndicator.vue';
+import QuickReplyDisplay from '@/components/output/QuickReplyDisplay.vue';
 import { ConversationPart } from '@/types';
-import { ClientEvent, ClientRequest, NormalizedOutputTemplate } from '@jovotech/client-web-vue2';
+import { Input, InputType, QuickReplyValue, ClientEvent, ClientRequest, NormalizedOutputTemplate } from '@jovotech/client-web-vue2';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'chat-widget-conversation',
-  components: { ChatWidgetConversationPart },
+  components: { ChatWidgetConversationPart, ChatWidgetConversationLoadingIndicator, QuickReplyDisplay },
 })
 export default class ChatWidgetConversation extends Vue {
   conversationParts: ConversationPart[] = [];
+  isLoading = false;
 
-  // takes the conversation parts and removes all quick replies but the last ones
-  get conversationPartsWithQuickRepliesOnlyInLast() {
-    return this.conversationParts.map((part, index) => {
-      return index !== this.conversationParts.length - 1 && part.type === 'response'
-        ? { ...part, data: { ...part.data, quickReplies: undefined } }
-        : part;
-    });
+  get quickReplies() {
+    const lastPart = this.conversationParts[this.conversationParts.length -1];
+    if (lastPart?.type === 'response') {
+      return lastPart.data.quickReplies;
+    }
+    return;
   }
 
   mounted() {
@@ -49,15 +60,35 @@ export default class ChatWidgetConversation extends Vue {
     this.$el.scrollTop = this.$el.scrollHeight;
   }
 
+  onQuickReplyClick(quickReply: QuickReplyValue) {
+    const input: Input =
+      typeof quickReply === 'string'
+        ? { type: InputType.Text, text: quickReply }
+        : quickReply.intent
+        ? {
+            type: InputType.Intent,
+            text: quickReply.value || quickReply.text,
+            intent: quickReply.intent,
+            entities: quickReply.entities,
+          }
+        : { type: InputType.Text, text: quickReply.value || quickReply.text };
+
+    return this.$client.send(input); // @see https://www.jovo.tech/marketplace/client-web#send-a-request-to-jovo
+  }
+
   private async onRequest(req: ClientRequest) {
-    // Do not show the LAUNCH bubble
+    // LAUNCH request should not be shown as a chat bubble
     if (req.input?.type === 'LAUNCH') {
       return;
     }
+
+    // Display the user input as a chat bubble
     this.conversationParts.push({
       type: 'request',
       data: req.input || {},
     });
+
+    this.isLoading = true;
     await this.$nextTick();
     this.scrollToBottom();
   }
@@ -67,6 +98,8 @@ export default class ChatWidgetConversation extends Vue {
       type: 'response',
       data: output,
     });
+
+    this.isLoading = false;
     await this.$nextTick();
     this.scrollToBottom();
   }
