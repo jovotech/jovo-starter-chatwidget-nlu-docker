@@ -32,18 +32,17 @@ export function extractSeatingType(jovo: Jovo): TableReservationData['seatingTyp
   // Although the SeatingType entity type (see models/en.json) only includes the two values below,
   // NLU mismatches can happen. If there's a different value, we return undefined.
   if (seatingType !== 'inside' && seatingType !== 'outside') {
-    return undefined;
+    return;
   }
   return seatingType;
 }
 
 export function extractDate(jovo: Jovo): TableReservationData['date'] {
   if (!jovo.$entities.date?.resolved) {
-    return undefined;
+    return;
   }
   // NOTE: For simplicity, we're not checking whether the user submitted both a day and time
-  const date = new Date(jovo.$entities.date.resolved);
-  return date;
+  return new Date(jovo.$entities.date.resolved);
 }
 
 export function formatDate(date: Date | string): string {

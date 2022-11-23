@@ -42,7 +42,7 @@ export default class ChatWidgetConversation extends Vue {
     if (lastPart?.type === 'response') {
       return lastPart.data.quickReplies;
     }
-    return undefined;
+    return;
   }
 
   mounted() {
