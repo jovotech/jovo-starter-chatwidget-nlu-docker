@@ -1,4 +1,4 @@
-# Jovo Docker Example
+# Jovo Starter: Chat Widget (Vue2), NLU (Snips), Docker
 
 ![A chatbot built with Vue.js, Jovo and Snips NLU, deployed with Docker](./img/jovo-docker.png)
 
@@ -17,8 +17,8 @@ Use the following commands to clone the repository (make sure to add `--recurse-
 
 ```sh
 # Clone this repository and download snips-nlu-server submodule from https://github.com/jovotech/snips-nlu-server
-$ git clone --recurse-submodules https://github.com/jovotech/jovo-docker-example.git
-$ cd jovo-docker-example
+$ git clone --recurse-submodules https://github.com/jovotech/jovo-starter-chatwidget-nlu-docker.git
+$ cd jovo-starter-chatwidget-nlu-docker
 
 # Start Docker container
 $ docker-compose up
