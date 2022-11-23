@@ -7,13 +7,13 @@ This sample repository allows you to run a chatbot built with Jovo, Vue.js, and 
 The project contains:
 
 - `app`: A conversational backend built with the [Jovo Framework](https://www.jovo.tech)
-- `chatwidget`: A Vue.js chat widget that interacts with the conversational backend
+- `chatwidget`: A Vue.js chat widget (based on the [Jovo Web Client](https://www.jovo.tech/marketplace/client-web-vue2)) that interacts with the conversational backend
 - `snips-nlu-server`: An open source natural language understanding (NLU) service that turns raw text into structured input. You can also find the module here: https://github.com/jovotech/snips-nlu-server
 
 
 ## Getting Started
 
-Use the following commands to clone the repository (make sure to add `--recurse-submodules` to download the submodule) and run it using Docker:
+Use the following commands to clone the repository (make sure to add `--recurse-submodules` to download the submodule) and run it using [Docker](https://www.docker.com/get-started/):
 
 ```sh
 # Clone this repository and download snips-nlu-server submodule from https://github.com/jovotech/snips-nlu-server
@@ -21,7 +21,7 @@ $ git clone --recurse-submodules https://github.com/jovotech/jovo-docker-example
 $ cd jovo-docker-example
 
 # Start Docker container
-$ docker-compose -f docker-compose.yml up
+$ docker-compose up
 ```
 
 You can then access the chat widget at `localhost:8080`:
@@ -32,5 +32,5 @@ If you make changes to the widget that don't show up immediately, you can stop t
 
 ```sh
 # Rebuild and start Docker container
-$ docker-compose -f docker-compose.yml up --build
+$ docker-compose up --build
 ```
