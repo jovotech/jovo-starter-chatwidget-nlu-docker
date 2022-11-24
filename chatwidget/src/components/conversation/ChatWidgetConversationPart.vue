@@ -1,15 +1,12 @@
 <template>
-    <div class="max-w-3/4 inline" :class="isRequest ? 'self-end' : 'self-start'">
-      <message-display
-        v-if="isRequest"
-        class="bg-primary text-white my-2"
-        :message="part.data.text || part.data.type"
-      />
-      <output-template-display
-        v-else
-        :output="part.data"
-      ></output-template-display>
-    </div>
+  <div class="max-w-3/4 inline" :class="isRequest ? 'self-end' : 'self-start'">
+    <message-display
+      v-if="isRequest"
+      class="bg-primary text-white my-2"
+      :message="part.data.text || part.data.type"
+    />
+    <output-template-display v-else :output="part.data" />
+  </div>
 </template>
 
 <script lang="ts">

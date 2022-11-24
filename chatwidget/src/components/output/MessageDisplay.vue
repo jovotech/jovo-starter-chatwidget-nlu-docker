@@ -18,9 +18,7 @@ export default class MessageDisplay extends Vue {
   @Prop({ required: true, type: [Object, String] })
   readonly message!: MessageValue;
   get text(): string {
-    return typeof this.message === 'string'
-      ? this.message
-      : this.message.text || '';
+    return typeof this.message === 'string' ? this.message : this.message.text || '';
   }
 }
 </script>
