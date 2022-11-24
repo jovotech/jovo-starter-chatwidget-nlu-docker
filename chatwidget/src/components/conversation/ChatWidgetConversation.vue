@@ -11,12 +11,12 @@
     />
     <chat-widget-conversation-loading-indicator :is-loading="isLoading" />
     <div v-if="quickReplies" class="self-end space-x-2 space-y-2">
-        <quick-reply-display
-          v-for="(quickReply, index) in quickReplies"
-          :key="index"
-          :quick-reply="quickReply"
-          @click="onQuickReplyClick"
-        />
+      <quick-reply-display
+        v-for="(quickReply, index) in quickReplies"
+        :key="index"
+        :quick-reply="quickReply"
+        @click="onQuickReplyClick"
+      />
     </div>
   </div>
 </template>
@@ -26,23 +26,34 @@ import ChatWidgetConversationPart from '@/components/conversation/ChatWidgetConv
 import ChatWidgetConversationLoadingIndicator from '@/components/conversation/ChatWidgetConversationLoadingIndicator.vue';
 import QuickReplyDisplay from '@/components/output/QuickReplyDisplay.vue';
 import { ConversationPart } from '@/types';
-import { Input, InputType, QuickReplyValue, ClientEvent, ClientRequest, NormalizedOutputTemplate } from '@jovotech/client-web-vue2';
+import {
+  Input,
+  InputType,
+  QuickReplyValue,
+  ClientEvent,
+  ClientRequest,
+  NormalizedOutputTemplate,
+} from '@jovotech/client-web-vue2';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'chat-widget-conversation',
-  components: { ChatWidgetConversationPart, ChatWidgetConversationLoadingIndicator, QuickReplyDisplay },
+  components: {
+    ChatWidgetConversationPart,
+    ChatWidgetConversationLoadingIndicator,
+    QuickReplyDisplay,
+  },
 })
 export default class ChatWidgetConversation extends Vue {
   conversationParts: ConversationPart[] = [];
   isLoading = false;
 
   get quickReplies() {
-    const lastPart = this.conversationParts[this.conversationParts.length -1];
+    const lastPart = this.conversationParts[this.conversationParts.length - 1];
     if (lastPart?.type === 'response') {
       return lastPart.data.quickReplies;
     }
-    return;
+    return undefined;
   }
 
   mounted() {

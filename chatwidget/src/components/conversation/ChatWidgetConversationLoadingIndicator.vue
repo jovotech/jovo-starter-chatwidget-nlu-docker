@@ -18,47 +18,47 @@ export default class ChatWidgetConversationLoadingIndicator extends Vue {
 </script>
 
 <style>
-  @-webkit-keyframes sk-bouncedelay {
-    0%,
-    80%,
-    100% {
-      -webkit-transform: scale(0);
-    }
-    40% {
-      -webkit-transform: scale(1);
-    }
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
   }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
 
-  @keyframes sk-bouncedelay {
-    0%,
-    80%,
-    100% {
-      -webkit-transform: scale(0);
-      transform: scale(0);
-    }
-    40% {
-      -webkit-transform: scale(1);
-      transform: scale(1);
-    }
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
   }
-  
-  .loading-indicator {
-    @apply inline-block;
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
+}
 
-  .loading-indicator > div {
-    @apply inline-block bg-primary w-4 h-4 opacity-50 rounded-full;
-    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  }
+.loading-indicator {
+  @apply inline-block;
+}
 
-  .loading-indicator .bounce1 {
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
-  }
+.loading-indicator > div {
+  @apply inline-block bg-primary w-4 h-4 opacity-50 rounded-full;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
 
-  .loading-indicator .bounce2 {
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
-  }
+.loading-indicator .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.loading-indicator .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
 </style>
